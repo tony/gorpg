@@ -13,3 +13,11 @@ func TestGetLocationRules(t *testing.T) {
 
 	fmt.Println("HI")
 }
+
+func TestGetCharacter(t *testing.T) {
+	name := "tony"
+	char := getCharacter(name)
+	if char.name != name {
+		t.Errorf("should return the right name (%s)", name)
+	}
+}
