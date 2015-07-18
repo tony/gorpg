@@ -19,3 +19,10 @@ func TestGetCharacter(t *testing.T) {
 		t.Errorf("should return the right name (%s)", name)
 	}
 }
+
+func TestGetBattle(t *testing.T) {
+	battle := getBattle()
+	if battle.State != "wait" {
+		t.Error("Battles should always start wait.")
+	}
+}

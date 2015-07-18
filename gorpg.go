@@ -13,6 +13,12 @@ type Location struct {
 	machine *fsm.Machine
 }
 
+type Battle struct {
+	State fsm.State
+
+	machine *fsm.Machine
+}
+
 type Character struct {
 	name     string
 	location Location
@@ -28,6 +34,18 @@ func (t *Location) Apply(r *fsm.Ruleset) *fsm.Machine {
 
 	t.machine.Rules = r
 	return t.machine
+}
+
+func getBattleRules() fsm.Ruleset {
+	rules := fsm.Ruleset{}
+	rules.AddTransition(fsm.T{"wait", "attack"})
+	rules.AddTransition(fsm.T{"wait", "run"})
+	rules.AddTransition(fsm.T{"wait", "use item"})
+	rules.AddRule(fsm.T{"wait", "attack"}, func(subject fsm.Stater, goal fsm.State) bool {
+		return true
+	})
+
+	return rules
 }
 
 func getLocationRules() fsm.Ruleset {
@@ -57,4 +75,10 @@ func main() {
 
 func getCharacter(name string) Character {
 	return Character{name: name, location: Location{State: "town"}}
+}
+
+func getBattle() Battle {
+	return Battle{
+		State: "wait",
+	}
 }
