@@ -1,7 +1,6 @@
 package main
 
 import "testing"
-import "fmt"
 
 func TestGetLocationRules(t *testing.T) {
 	rules := getLocationRules()
@@ -11,7 +10,6 @@ func TestGetLocationRules(t *testing.T) {
 		t.Error("Should be allowed to forest")
 	}
 
-	fmt.Println("HI")
 }
 
 func TestGetCharacter(t *testing.T) {
