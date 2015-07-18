@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/ryanfaerman/fsm"
+	//"github.com/spf13/viper"
 )
 
 type Location struct {
@@ -29,34 +30,31 @@ func (t *Location) Apply(r *fsm.Ruleset) *fsm.Machine {
 	return t.machine
 }
 
-func main() {
-	println("la")
-	var err error
-	loc := Location{State: "town"}
+func getLocationRules() fsm.Ruleset {
 	rules := fsm.Ruleset{}
 	rules.AddTransition(fsm.T{"town", "forest"})
 	rules.AddTransition(fsm.T{"forest", "battle"})
-
-	println("Hi")
-	log.Print("Lol")
-	if err != nil {
-		log.Fatal(err)
-	}
-	println("Hi")
-
 	rules.AddRule(fsm.T{"town", "forest"}, func(subject fsm.Stater, goal fsm.State) bool {
 		println("You must have enough energy to go to forest.")
 		return true
 	})
-	err = loc.Apply(&rules).Transition("town")
-	permission := rules.Permitted(&Location{State: "town"}, "forest")
-	println(permission)
 
-	char := getCharacter("tony")
-	permission = rules.Permitted(&char.location, "forest")
-	println(permission)
+	return rules
 }
 
-func getCharacter(name string) *Character {
-	return &Character{name: name, location: Location{State: "town"}}
+func testbasics(rules *fsm.Ruleset, char *Character) {
+	permission := rules.Permitted(&char.location, "forest")
+	log.Printf("Do I have energy to go to forest? %t", permission)
+	log.Print(char.name)
+}
+func main() {
+	rules := getLocationRules()
+
+	char := getCharacter("tony")
+
+	testbasics(&rules, &char)
+}
+
+func getCharacter(name string) Character {
+	return Character{name: name, location: Location{State: "town"}}
 }
