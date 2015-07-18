@@ -42,7 +42,7 @@ func getLocationRules() fsm.Ruleset {
 	return rules
 }
 
-func testbasics(rules *fsm.Ruleset, char *Character) {
+func testBasics(rules *fsm.Ruleset, char *Character) {
 	permission := rules.Permitted(&char.location, "forest")
 	log.Printf("Do I have energy to go to forest? %t", permission)
 	log.Print(char.name)
@@ -52,7 +52,7 @@ func main() {
 
 	char := getCharacter("tony")
 
-	testbasics(&rules, &char)
+	testBasics(&rules, &char)
 }
 
 func getCharacter(name string) Character {
