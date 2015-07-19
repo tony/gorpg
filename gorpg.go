@@ -20,8 +20,13 @@ type Battle struct {
 }
 
 type Character struct {
-	name     string
-	location Location
+	name       string
+	location   Location
+	hp         uint16
+	mp         uint16
+	energy     uint8
+	level      uint8
+	experience uint32
 }
 
 func (t *Location) CurrentState() fsm.State { return t.State }
@@ -36,7 +41,7 @@ func (t *Location) Apply(r *fsm.Ruleset) *fsm.Machine {
 	return t.machine
 }
 
-func getBattleRules() fsm.Ruleset {
+func NewBattleRules() fsm.Ruleset {
 	rules := fsm.Ruleset{}
 	rules.AddTransition(fsm.T{"wait", "attack"})
 	rules.AddTransition(fsm.T{"wait", "run"})
@@ -68,16 +73,16 @@ func testBasics(rules *fsm.Ruleset, char *Character) {
 func main() {
 	rules := getLocationRules()
 
-	char := getCharacter("tony")
+	char := NewCharacter("tony")
 
 	testBasics(&rules, &char)
 }
 
-func getCharacter(name string) Character {
+func NewCharacter(name string) Character {
 	return Character{name: name, location: Location{State: "town"}}
 }
 
-func getBattle() Battle {
+func NewBattle() Battle {
 	return Battle{
 		State: "wait",
 	}

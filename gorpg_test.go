@@ -14,14 +14,14 @@ func TestGetLocationRules(t *testing.T) {
 
 func TestGetCharacter(t *testing.T) {
 	name := "tony"
-	char := getCharacter(name)
+	char := NewCharacter(name)
 	if char.name != name {
 		t.Errorf("should return the right name (%s)", name)
 	}
 }
 
 func TestGetBattle(t *testing.T) {
-	battle := getBattle()
+	battle := NewBattle()
 	if battle.State != "wait" {
 		t.Error("Battles should always start wait.")
 	}
