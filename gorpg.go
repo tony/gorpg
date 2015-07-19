@@ -20,4 +20,6 @@ func main() {
 	char := NewCharacter("tony")
 
 	testBasics(&rules, &char)
+
+	showMainWindow()
 }
